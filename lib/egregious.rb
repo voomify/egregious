@@ -166,6 +166,10 @@ module Egregious
     end
   end
 
+  def build_html_file_path(status)
+    File.expand_path(Rails.root, 'public', status + '.html')
+  end
+
   def self.included(base)
     base.class_eval do
       rescue_from 'Exception' , :with => :egregious_exception_handler

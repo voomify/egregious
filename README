@@ -75,3 +75,8 @@ def egregious_respond_to(exception)
                                           build_html_file_path(status) : build_html_file_path('500')}
     end
 end
+
+# override this if you want to change what html static file gets returned.
+def build_html_file_path(status)
+    File.expand_path(Rails.root, 'public', status + '.html')
+  end
