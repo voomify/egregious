@@ -20,6 +20,8 @@ provide the caller context information.
    falling back to the 500.html page.
  * Defines exceptions for all http status codes allowing you to throw these exceptions anywhere in your code.
  * Allows you to change the exception mapping to fit your needs, adding exceptions and changing status mapping.
+ * If Hoptoad is defined it will send the errors to Hoptoad/Airbrake.
+ * The error will be logged with stack trace
 
 
 REQUIRES:
@@ -45,3 +47,31 @@ raise Egregious::BadRequest.new("You can not created an order without a customer
 
 All the http status codes have exception classes named after them in the Egregious module. You can throw any exception,
 or define your own exceptions. You can find a list in the Rack::Utils::HTTP_STATUS_CODES class.
+
+If you want to change the behavior then you can override the following methods in your ApplicationController.
+
+# override this if you want your flash to behave differently
+def egregious_flash(exception)
+    flash.now[:alert] = exception.message
+end
+
+# override this if you want your logging to behave differently
+def egregious_log(exception)
+    logger.fatal(
+        "\n\n" + exception.class.to_s + ' (' + exception.message.to_s + '):\n    ' +
+            clean_backtrace(exception).join("\n    ") +
+            "\n\n")
+    HoptoadNotifier.notify(exception) if defined?(HoptoadNotifier)
+end
+
+# override this if you want to change your respond_to behavior
+def egregious_respond_to(exception)
+    respond_to do |format|
+          status = status_code_for_exception(exception)
+          format.xml { render :xml=> exception.to_xml, :status => status }
+          format.json { render :json=> exception.to_json, :status => status }
+          # render the html page for the status we are returning it exists...if not then render the 500.html page.
+          format.html { render :file => File.exists?(build_html_file_path(status)) ?
+                                          build_html_file_path(status) : build_html_file_path('500')}
+    end
+end

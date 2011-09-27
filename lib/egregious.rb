@@ -133,23 +133,38 @@ module Egregious
     self.exception_codes[exception.class] ? self.exception_codes[exception.class] : '500'
   end
 
+  # this is the method that handles all the exceptions we have mapped
   def egregious_exception_handler(exception)
+    egregious_flash(exception)
+    egregious_log(exception)
+    egregious_respond_to(exception)
+  end
+
+  # override this if you want your flash to behave differently
+  def egregious_flash(exception)
     flash.now[:alert] = exception.message
+  end
+
+  # override this if you want your logging to behave differently
+  def egregious_log(exception)
     logger.fatal(
         "\n\n" + exception.class.to_s + ' (' + exception.message.to_s + '):\n    ' +
             clean_backtrace(exception).join("\n    ") +
             "\n\n")
     HoptoadNotifier.notify(exception) if defined?(HoptoadNotifier)
+  end
+
+  # override this if you want to change your respond_to behavior
+  def egregious_respond_to(exception)
     respond_to do |format|
       status = status_code_for_exception(exception)
       format.xml { render :xml=> exception.to_xml, :status => status }
       format.json { render :json=> exception.to_json, :status => status }
       # render the html page for the status we are returning it exists...if not then render the 500.html page.
-      format.html { render :file => File.exists?(Rails.root + '/public/' + status + '.html') ?
-                                      Rails.root + '/public/' + status + '.html' : Rails.root + '/public/500.html'}
+      format.html { render :file => File.exists?(build_html_file_path(status)) ?
+                                      build_html_file_path(status) : build_html_file_path('500')}
     end
   end
-
 
   def self.included(base)
     base.class_eval do
