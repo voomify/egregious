@@ -1,0 +1,44 @@
+Egregious is a rails based exception handling gem for well defined http exception handling for json, xml and html.
+
+If you have a json or xml api into your rails application, you probably have added your own exception handling to map
+exceptions to a http status and formatting your json and xml output.  We did to. We were tired of doing it over and over.
+We decided to create egregious. One of the major goals is to start providing a more consistent api error experience for all rails
+applications. As of the creation of egregious the behavior of rails was to return html when an exception is thrown with
+the status code of 500.  With egregious proper json and html of the error will be returned with a good default mapping
+of exceptions to http status codes.  This allows api developers to respond to the status code properly, instead of
+scratching their head with 500's coming back all the time. If the problem was yours then the result codes are in the 300 range.
+If the problem was the server then the status codes are in the 500's.  With the message and exception type providing
+more context information.
+
+ What egregious can do:
+
+ * Defines default exception handling for most common ruby, rails, warden and cancan exceptions.  (warden and cancan are optional)
+ * Catches defined exceptions using a rescue_with returning the status code defined for each exception and well structured json, xml
+ * For html production requests attempts to load the html error pages for the mapped status code, falling back to the 500.html page.
+ * Defines exceptions for all http status codes allowing you to throw these exceptions anywhere in your code.
+ * Allows you to change the exception mapping to fit your needs, adding exceptions and changing status mapping.
+
+
+REQUIRES:
+  Rails 3.x
+
+USAGE:
+1) Add to your Gemfile:
+gem 'egregious'
+
+2) In your ApplicationController add:
+include Egregious
+
+Optionally, to configure create an initializer and add:
+
+Egregious.exception_codes.merge!({NameError => :bad_request})
+
+This will either add a new mapping or replace the existing mapping to a new status code.
+You can pass the status code as a symbol, integer or string.
+
+In your code if you want to send an error back just throw an exception. For example:
+
+raise Egregious::BadRequest.new("You can not created an order without a customer. Please select the customer first.") unless customer_id
+
+All the http status codes have exception classes named after them in the Egregious module. You can throw any exception,
+or define your own exceptions. You can find a list in the Rack::Utils::HTTP_STATUS_CODES class.
