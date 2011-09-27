@@ -1,14 +1,14 @@
 Egregious is a rails based exception handling gem for well defined http exception handling for json, xml and html.
 
 If you have a json or xml api into your rails application, you probably have added your own exception handling to map
-exceptions to a http status and formatting your json and xml output.  We did to. We were tired of doing it over and
-over. We decided to create egregious. One of the major goals is to start providing a more consistent api error
-experience for all rails applications. As of the creation of egregious the behavior of rails was to return html when an
-exception is thrown with the status code of 500.  With egregious proper json and html of the error will be returned
-with a good default mapping of exceptions to http status codes.  This allows api developers to respond to the status
-code properly, instead of scratching their head with 500's coming back all the time. If the problem was yours then the
-result codes are in the 300 range. If the problem was the server then the status codes are in the 500's.  With the
-message and exception type providing more context information.
+exceptions to a http status and formatting your json and xml output.  We decided to create egregious. One of the goals
+is to start providing a more consistent api error experience for all rails applications. As of the creation of
+egregious the behavior of rails was to return html when an exception is thrown with the status code of 500.  With
+egregious proper json and html of the error will be returned with a good default mapping of exceptions to http status
+codes.  This allows api developers to respond to the status code properly, instead of scratching their head with 500's
+coming back all the time. If the problem was the api caller then the result codes are in the 300 range. If the problem
+was on the server then the status codes are in the 500 range.  The returned exception message and exception type
+provide the caller context information.
 
  What egregious can do:
 
