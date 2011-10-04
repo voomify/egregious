@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Russell Edens"]
   s.email       = ["rx@voomify.com"]
   s.homepage    = "http://github.com/voomify/egregious"
-  s.summary     = %q{Egregious is a rails based exception handling gem for well defined http exception handling for json, xml and html}
-  s.description = %q{Requires Rails 3.x.}
+  s.summary     = %q{Egregious is a rails based exception handling gem for well defined http exception handling for json, xml and html. Requires Rails 3.x.}
+  s.description = %q{Egregious is a rails based exception handling gem for well defined http exception handling for json, xml and html. Requires Rails 3.x.}
 
   s.rubyforge_project = "egregious"
 
