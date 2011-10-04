@@ -167,7 +167,7 @@ module Egregious
   end
 
   def build_html_file_path(status)
-    File.expand_path(Rails.root, 'public', status + '.html')
+    File.join(Rails.root, 'public', status + '.html')
   end
 
   def self.included(base)

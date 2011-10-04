@@ -101,5 +101,16 @@ describe Egregious do
       Egregious.exception_codes.merge!({NameError => "999"})
       status_code_for_exception(NameError.new).should=="999"
     end
+  end
+
+  describe "build_html_file_path" do
+    it "should build a valid path" do
+      class Rails
+          def self.root
+            __FILE__
+          end
+      end
+      build_html_file_path('500').should == File.join(__FILE__, 'public', '500.html')
     end
+  end
 end
