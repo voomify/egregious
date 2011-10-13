@@ -19,6 +19,11 @@ module Egregious
     end
   end
 
+  def status_code(status)
+    Egregious.status_code(status)
+  end
+
+
   # internal method that loads the exception codes
   def self._load_exception_codes
 
@@ -167,7 +172,7 @@ module Egregious
   end
 
   def build_html_file_path(status)
-    File.join(Rails.root, 'public', status + '.html')
+    File.join(Rails.root, 'public', "#{status_code(status)}.html")
   end
 
   def self.included(base)
