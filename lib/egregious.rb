@@ -167,7 +167,8 @@ module Egregious
       format.json { render :json=> exception.to_json, :status => status }
       # render the html page for the status we are returning it exists...if not then render the 500.html page.
       format.html { render :file => File.exists?(build_html_file_path(status)) ?
-                                      build_html_file_path(status) : build_html_file_path('500')}
+                                      build_html_file_path(status) : build_html_file_path('500'),
+                           :status => status }
     end
   end
 
