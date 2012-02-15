@@ -13,7 +13,8 @@ module Egregious
 
   def self.status_code(status)
     if status.is_a?(Symbol)
-      Rack::Utils::HTTP_STATUS_CODES[status] || 500
+      key = status.to_s.split("_").map {|e| e.capitalize}.join(" ")
+      Rack::Utils::HTTP_STATUS_CODES.invert[key] || 500
     else
       status.to_i
     end
