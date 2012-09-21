@@ -6,6 +6,13 @@ end
 include Egregious
 
 describe Egregious do
+
+  describe 'status_code' do
+    it "should translate Symbol to right HTTP STATUS CODE" do
+      status_code(:bad_request).should == 400
+    end
+  end
+
   describe 'clean_backtrace ' do
     it "should return nil" do
       clean_backtrace(Exception.new).should == nil
