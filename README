@@ -1,3 +1,10 @@
+Update Log:
+  Version 9.21.2012 released to https://rubygems.org/gems/egregious
+    Merged pull requests:
+      Bug Fix: should translate status code Symbol to right HTTP STATUS CODE -  avinasha
+      Fixes teapot bug with rails 3.2.8. -  kbrown 
+    Thank you avinasha and kbrown along with all the other forks! Keep those pull requests comming.
+
 These instructions with some formatting can be found @ http://railsindirection.blogspot.com/2011/09/rails-exception-handling-egregious.html
 
 Egregious is a rails based exception handling gem for well defined http exception handling for json, xml and html.
