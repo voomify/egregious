@@ -8,7 +8,7 @@ module Egregious
   # use these exception to control the code you are throwing from you code
   # all http statuses have an exception defined for them
   Rack::Utils::HTTP_STATUS_CODES.each do |key, value|
-    class_eval "class #{value.gsub(/\s|-/,'')} < StandardError; end"
+    class_eval "class #{value.gsub(/\s|-|'/,'')} < StandardError; end"
   end
 
   def self.status_code(status)
@@ -34,7 +34,7 @@ module Egregious
     }
     # all status codes have a exception class defined
     Rack::Utils::HTTP_STATUS_CODES.each do |key, value|
-      exception_codes.merge!(eval("Egregious::#{value.gsub(/\s|-/,'')}")=>value.downcase.gsub(/\s|-/, '_').to_sym)
+      exception_codes.merge!(eval("Egregious::#{value.gsub(/\s|-|'/,'')}")=>value.downcase.gsub(/\s|-/, '_').to_sym)
     end
 
     if defined?(ActionController)
