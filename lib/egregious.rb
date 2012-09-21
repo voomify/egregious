@@ -2,6 +2,14 @@ require "egregious/version"
 require "egregious/extensions/exception"
 require 'rack'
 
+require 'abstract_controller/base'
+require 'action_controller'
+require 'action_controller/metal/request_forgery_protection'
+require 'active_record/errors'
+require 'active_record'
+require 'active_record/associations'
+require 'active_record/validations'
+
 
 module Egregious
 
