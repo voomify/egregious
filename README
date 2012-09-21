@@ -1,3 +1,5 @@
+These instructions with some formatting can be found @ http://railsindirection.blogspot.com/2011/09/rails-exception-handling-egregious.html
+
 Egregious is a rails based exception handling gem for well defined http exception handling for json, xml and html.
 
 If you have a json or xml api into your rails application, you probably have added your own exception handling to map
