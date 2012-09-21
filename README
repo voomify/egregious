@@ -1,5 +1,5 @@
 Update Log:
-  Version 9.21.2012 released to https://rubygems.org/gems/egregious
+  Version 0.2.0 released to https://rubygems.org/gems/egregious on 9.21.2012
     Merged pull requests:
       Bug Fix: should translate status code Symbol to right HTTP STATUS CODE -  avinasha
       Fixes teapot bug with rails 3.2.8. -  kbrown 
