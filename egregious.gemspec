@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "warden"
   s.add_development_dependency "cancan"
 
-  s.add_runtime_dependency "rails", '~> 3.2.8'
+  s.add_runtime_dependency "rails", '> 3.0.1'
   s.add_runtime_dependency "rack"
   s.add_runtime_dependency "htmlentities"
 
