@@ -91,4 +91,7 @@ end
 # override this if you want to change what html static file gets returned.
 def build_html_file_path(status)
     File.expand_path(Rails.root, 'public', status + '.html')
-  end
+end
+
+KNOWN ISSUES:
+* If you use CanCan or Devise you must have Egregious after CanCan/Devise in your Gemfile, if not it will not handle those errors correctly.
