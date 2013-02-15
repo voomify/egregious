@@ -75,6 +75,21 @@ module Egregious
                                ActiveRecord::UnknownAttributeError=>status_code(:bad_request)
                              })
     end
+    
+    if defined?(Mongoid)
+      exception_codes.merge!({
+                               Mongoid::Errors::InvalidFind=>status_code(:bad_request),
+                               Mongoid::Errors::DocumentNotFound=>status_code(:not_found),
+                               Mongoid::Errors::Validations=>status_code(:unprocessable_entity)
+                             })
+      
+      if Mongoid::VERSION > '3'
+        exception_codes.merge!({
+                                 Mongoid::Errors::ReadonlyAttribute=>status_code(:forbidden),
+                                 Mongoid::Errors::UnknownAttribute=>status_code(:bad_request)
+                               })
+      end
+    end
 
     if defined?(Warden)
       exception_codes.merge!({

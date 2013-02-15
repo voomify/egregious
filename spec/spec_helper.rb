@@ -9,6 +9,7 @@ require 'active_support/test_case'
 require 'action_controller'
 require 'warden'
 require 'cancan'
+require 'mongoid'
 
 require 'egregious' # and any other gems you need
 
