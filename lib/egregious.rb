@@ -167,7 +167,7 @@ module Egregious
             "\n\n")
     HoptoadNotifier.notify(exception) if defined?(HoptoadNotifier)
   end
-
+  
   # override this if you want to change your respond_to behavior
   def egregious_respond_to(exception)
     respond_to do |format|
@@ -188,6 +188,25 @@ module Egregious
   def self.included(base)
     base.class_eval do
       rescue_from 'Exception' , :with => :egregious_exception_handler
+      
+      unless respond_to?(:flash)
+        def egregious_flash(exception)
+        end
+      end
+      
+      unless respond_to?(:respond_to)
+        def egregious_respond_to(exception)
+          status = status_code_for_exception(exception)
+          case params[:format]
+          when 'xml' then render :xml=> exception.to_xml, :status => status
+          when 'json' then render :json=> exception.to_json, :status => status
+          # render the html page for the status we are returning it exists...if not then render the 500.html page.
+          else render :file => File.exists?(build_html_file_path(status)) ?
+                                            build_html_file_path(status) : build_html_file_path('500'),
+                                 :status => status
+          end
+        end
+      end
     end
   end
 end

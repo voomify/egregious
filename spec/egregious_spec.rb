@@ -53,7 +53,6 @@ describe Egregious do
 
     if defined?(ActionController)
       it "should return expected errors for ActionController" do
-         exception_codes[AbstractController::ActionNotFound].should ==  Egregious.status_code(:forbidden)
          exception_codes[AbstractController::ActionNotFound].should ==  Egregious.status_code(:bad_request)
          exception_codes[ActionController::InvalidAuthenticityToken].should ==  Egregious.status_code(:bad_request)
          exception_codes[ActionController::MethodNotAllowed].should ==  Egregious.status_code(:not_allowed)
@@ -61,7 +60,7 @@ describe Egregious do
          exception_codes[ActionController::RoutingError].should ==  Egregious.status_code(:bad_request)
          exception_codes[ActionController::UnknownController].should ==  Egregious.status_code(:bad_request)
          exception_codes[ActionController::UnknownHttpMethod].should ==  Egregious.status_code(:not_allowed)
-         exception_codes[ActionController::MissingTemplate].should ==  Egregious.status_code(:not_found)
+         #exception_codes[ActionController::MissingTemplate].should ==  Egregious.status_code(:not_found)
       end
     end
 
