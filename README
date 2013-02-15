@@ -1,10 +1,15 @@
 Update Log:
+  Version 0.2.2 released to https://rubygems.org/gems/egregious on 2.15.2013
+      Merged pull requests:
+        Compatibility with Rails::API (#5)
+        Thank you dwbutler! Keep those pull requests coming.
+
   Version 0.2.1 released to https://rubygems.org/gems/egregious on 9.21.2012
     Merged pull requests:
       Bug Fix: should translate status code Symbol to right HTTP STATUS CODE -  avinasha
       Fixes teapot bug with rails 3.2.8. -  kbrown 
       Note: version 0.2.0 does not work with rails 3.2.8 you should update to 0.2.1
-    Thank you avinasha and kbrown along with all the other forks! Keep those pull requests comming.
+    Thank you avinasha and kbrown along with all the other forks! Keep those pull requests coming.
 
 If you would like to contribute take a look at the issues feature list, fork and issue a pull request!
 
