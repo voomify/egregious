@@ -77,6 +77,8 @@ module Egregious
     end
     
     if defined?(Mongoid)
+      require 'egregious/extensions/mongoid'
+      
       exception_codes.merge!({
                                Mongoid::Errors::InvalidFind=>status_code(:bad_request),
                                Mongoid::Errors::DocumentNotFound=>status_code(:not_found),

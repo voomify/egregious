@@ -4,17 +4,17 @@ if defined?(Mongoid)
     module Errors
       class MongoidError
         def to_xml
-          "<errors><error>#{HTMLEntities.new.encode(@summary || to_s)}</error><type>#{self.exception_type}</type></errors>"
+          "<errors><error>#{HTMLEntities.new.encode(@problem || to_s)}</error><type>#{self.exception_type}</type></errors>"
         end
 
         def to_json
-          "{\"error\":#{ActiveSupport::JSON.encode(@summary || to_s)}, \"type\":\"#{self.exception_type}\"}"
+          "{\"error\":#{ActiveSupport::JSON.encode(@problem || to_s)}, \"type\":\"#{self.exception_type}\"}"
         end
       end
       
       class Validations
         def to_xml
-          "<errors><error>#{HTMLEntities.new.encode(self.document.errors.full_messages.join(', ').gsub)}</error><type>#{self.exception_type}</type></errors>"
+          "<errors><error>#{HTMLEntities.new.encode(self.document.errors.full_messages.join(', ').gsub(/\r/, ' ').gsub(/\n/, ' ').squeeze(' '))}</error><type>#{self.exception_type}</type></errors>"
         end
 
         def to_json
