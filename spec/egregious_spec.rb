@@ -10,6 +10,8 @@ describe Egregious do
   describe 'status_code' do
     it "should translate Symbol to right HTTP STATUS CODE" do
       status_code(:bad_request).should == 400
+      status_code(:unauthorized).should == 401
+      status_code(:unprocessable_entity).should == 422
     end
   end
 
@@ -94,6 +96,21 @@ describe Egregious do
         # technically this should be forbidden, but for some reason cancan returns AccessDenied when you are not logged in
         exception_codes[CanCan::AccessDenied].should ==  Egregious.status_code(:unauthorized)
         exception_codes[CanCan::AuthorizationNotPerformed].should ==  Egregious.status_code(:unauthorized)
+      end
+    end
+    
+    if defined?(Mongoid)
+      it "should return expected errors for Mongoid" do
+        exception_codes[Mongoid::Errors::InvalidFind].should == Egregious.status_code(:bad_request)
+        exception_codes[Mongoid::Errors::DocumentNotFound].should == Egregious.status_code(:not_found)
+        exception_codes[Mongoid::Errors::Validations].should == Egregious.status_code(:unprocessable_entity)
+      end
+      
+      if Mongoid::VERSION > '3'
+        it "should return expected errors for Mongoid 3+" do
+          exception_codes[Mongoid::Errors::ReadonlyAttribute].should ==  Egregious.status_code(:forbidden)
+          exception_codes[Mongoid::Errors::UnknownAttribute].should == Egregious.status_code(:bad_request)
+        end
       end
     end
   end

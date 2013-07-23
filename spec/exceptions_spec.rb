@@ -41,3 +41,48 @@ describe Exception do
     X::Y::Z.new.exception_type.should == 'Z'
   end
 end
+
+if defined?(Mongoid)
+  class TestModel
+    include Mongoid::Document
+    
+    field :foo
+    validates_presence_of :foo
+  end
+
+  
+  describe Mongoid::Errors::MongoidError do
+    let(:exception) { Mongoid::Errors::InvalidFind.new }
+    let(:error_message) { "Calling Document.find with nil is invalid." }
+    
+    it "should output json with a short problem description" do
+      result = JSON.parse(exception.to_json)
+      result['error'].should == error_message
+    end
+    
+    it "should output xml with a short problem description" do
+      doc = Hpricot.XML(exception.to_xml)
+      (doc/:errors).each do |error|
+         HTMLEntities.new.decode((error/:error).inner_html).should == error_message
+      end
+    end
+  end
+  
+  describe Mongoid::Errors::Validations do
+    let(:model) { TestModel.create }
+    let(:exception) { Mongoid::Errors::Validations.new(model) }
+    let(:error_message) { model.errors.full_messages.first }
+    
+    it "should output json with a short summary" do
+      result = JSON.parse(exception.to_json)
+      result['error'].should == error_message
+    end
+    
+    it "should output xml with a short problem description" do
+      doc = Hpricot.XML(exception.to_xml)
+      (doc/:errors).each do |error|
+         HTMLEntities.new.decode((error/:error).inner_html).should == error_message
+      end
+    end
+  end
+end
