@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.homepage    = "http://github.com/voomify/egregious"
   s.summary     = %q{Egregious is a rails based exception handling gem for well defined http exception handling for json, xml and html. Requires Rails 3.x.}
   s.description = %q{Egregious is a rails based exception handling gem for well defined http exception handling for json, xml and html. Requires Rails 3.x.}
-
+  s.license = 'MIT'
   s.rubyforge_project = "egregious"
 
   s.files         = `git ls-files`.split("\n")
