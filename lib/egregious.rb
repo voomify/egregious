@@ -109,7 +109,7 @@ module Egregious
   end
 
   @@exception_codes = self._load_exception_codes
-  @@root = defined?(Rail) ? Rails.root : nil
+  @@root = defined?(Rails) ? Rails.root : nil
 
   # exposes the root of the app
   def self.root

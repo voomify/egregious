@@ -18,6 +18,11 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
+
+  s.add_runtime_dependency "rails", '~> 3.1.12'
+  s.add_runtime_dependency "rack", '>= 1.3.6'
+  s.add_runtime_dependency "htmlentities"
+
   # specify any dependencies here; for example:
   s.add_development_dependency "rspec"
   s.add_development_dependency "json"
@@ -27,8 +32,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "mongoid"
   s.add_development_dependency "bson_ext"
 
-  s.add_runtime_dependency "rails", '>= 3.0.1'
-  s.add_runtime_dependency "rack"
-  s.add_runtime_dependency "htmlentities"
 
 end

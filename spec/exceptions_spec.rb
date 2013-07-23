@@ -57,13 +57,13 @@ if defined?(Mongoid)
     
     it "should output json with a short problem description" do
       result = JSON.parse(exception.to_json)
-      result['error'].should == error_message
+      result['error'].should =~ /#{error_message}/
     end
     
     it "should output xml with a short problem description" do
       doc = Hpricot.XML(exception.to_xml)
       (doc/:errors).each do |error|
-         HTMLEntities.new.decode((error/:error).inner_html).should == error_message
+         HTMLEntities.new.decode((error/:error).inner_html).should =~ /#{error_message}/
       end
     end
   end

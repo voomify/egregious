@@ -1,15 +1,18 @@
 Update Log:
+  Version 0.2.3 released to https://rubygems.org/gems/egregious on 7.23.2013
+        Merged pull requests:
+          Mongoid integration (#6)
+        Bug Fix: Bad Rails test
+        Updated rails and rack dependencies
   Version 0.2.2 released to https://rubygems.org/gems/egregious on 2.15.2013
       Merged pull requests:
         Compatibility with Rails::API (#5)
-        Thank you dwbutler! Keep those pull requests coming.
 
   Version 0.2.1 released to https://rubygems.org/gems/egregious on 9.21.2012
     Merged pull requests:
       Bug Fix: should translate status code Symbol to right HTTP STATUS CODE -  avinasha
       Fixes teapot bug with rails 3.2.8. -  kbrown 
       Note: version 0.2.0 does not work with rails 3.2.8 you should update to 0.2.1
-    Thank you avinasha and kbrown along with all the other forks! Keep those pull requests coming.
 
 If you would like to contribute take a look at the issues feature list, fork and issue a pull request!
 
@@ -29,8 +32,8 @@ provide the caller context information.
 
  What egregious can do:
 
- * Defines default exception handling for most common ruby, rails, warden and cancan exceptions.
-   (warden and cancan are optional)
+ * Defines default exception handling for most common ruby, rails, warden, cancan and mongoid exceptions.
+   (warden, cancan and mongoid are optional)
  * Catches defined exceptions using a rescue_with returning the status code defined for each exception
    and well structured json, xml
  * For html production requests attempts to load the html error pages for the mapped status code,
@@ -42,7 +45,8 @@ provide the caller context information.
 
 
 REQUIRES:
-  Rails 3.x
+  rails ~> 3.1.12
+  rack  >= 1.3.6
 
 USAGE:
 1) Add to your Gemfile:
@@ -99,4 +103,4 @@ def build_html_file_path(status)
 end
 
 KNOWN ISSUES:
-* If you use CanCan or Devise you must have Egregious after CanCan/Devise in your Gemfile, if not it will not handle those errors correctly.
+* If you use Mongoid, CanCan or Devise you must have Egregious after CanCan/Devise in your Gemfile, if not it will not handle those errors correctly.
