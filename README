@@ -1,4 +1,6 @@
 Update Log:
+  Version 0.2.4 released to https://rubygems.org/gems/egregious on 7.23.2013
+        Added MIT License
   Version 0.2.3 released to https://rubygems.org/gems/egregious on 7.23.2013
         Merged pull requests:
           Mongoid integration (#6)
