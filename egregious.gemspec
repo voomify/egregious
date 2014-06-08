@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
 
-  s.add_runtime_dependency "rails", '~> 3.1.12'
+  s.add_runtime_dependency "rails", '>3.0'
   s.add_runtime_dependency "rack", '>= 1.3.6'
   s.add_runtime_dependency "htmlentities"
 

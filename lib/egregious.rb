@@ -13,10 +13,15 @@ require 'active_record/validations'
 
 module Egregious
 
+  # Must sub out (Experimental) to avoid a class name: VariantAlsoNegotiates(Experimental)
+  def self.clean_class_name(str)
+    str.gsub(/\s|-|'/,'').sub('(Experimental)','')
+  end
+
   # use these exception to control the code you are throwing from you code
   # all http statuses have an exception defined for them
   Rack::Utils::HTTP_STATUS_CODES.each do |key, value|
-    class_eval "class #{value.gsub(/\s|-|'/,'')} < StandardError; end"
+    class_eval "class #{Egregious.clean_class_name(value)} < StandardError; end"
   end
 
   def self.status_code(status)
@@ -42,7 +47,8 @@ module Egregious
     }
     # all status codes have a exception class defined
     Rack::Utils::HTTP_STATUS_CODES.each do |key, value|
-      exception_codes.merge!(eval("Egregious::#{value.gsub(/\s|-|'/,'')}")=>value.downcase.gsub(/\s|-/, '_').to_sym)
+      p "Egregious::#{value.gsub(/\s|-|'/,'')}"
+      exception_codes.merge!(eval("Egregious::#{Egregious.clean_class_name(value)}")=>value.downcase.gsub(/\s|-/, '_').to_sym)
     end
 
     if defined?(ActionController)
@@ -66,7 +72,6 @@ module Egregious
     if defined?(ActiveRecord)
       exception_codes.merge!({
                                ActiveRecord::AttributeAssignmentError=>status_code(:bad_request),
-                               ActiveRecord::HasAndBelongsToManyAssociationForeignKeyNeeded=>status_code(:bad_request),
                                ActiveRecord::MultiparameterAssignmentErrors=>status_code(:bad_request),
                                ActiveRecord::ReadOnlyAssociation=>status_code(:forbidden),
                                ActiveRecord::ReadOnlyRecord=>status_code(:forbidden),
@@ -74,6 +79,13 @@ module Egregious
                                ActiveRecord::RecordNotFound=>status_code(:not_found),
                                ActiveRecord::UnknownAttributeError=>status_code(:bad_request)
                              })
+      begin
+        exception_codes.merge!({
+                                 ActiveRecord::HasAndBelongsToManyAssociationForeignKeyNeeded=>status_code(:bad_request)
+                               })
+      rescue => e
+        # Unknown if using Rails 4
+      end
     end
     
     if defined?(Mongoid)
