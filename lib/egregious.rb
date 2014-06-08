@@ -47,7 +47,6 @@ module Egregious
     }
     # all status codes have a exception class defined
     Rack::Utils::HTTP_STATUS_CODES.each do |key, value|
-      p "Egregious::#{value.gsub(/\s|-|'/,'')}"
       exception_codes.merge!(eval("Egregious::#{Egregious.clean_class_name(value)}")=>value.downcase.gsub(/\s|-/, '_').to_sym)
     end
 
