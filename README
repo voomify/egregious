@@ -1,5 +1,8 @@
 Update Log:
-  Version 0.2.4 released to https://rubygems.org/gems/egregious on 7.23.2013
+  Version 0.2.5 released to https://rubygems.org/gems/egregious on 7.22.2014
+        Merged pull request:
+          Rails 4 support (#11,#12)
+    Version 0.2.4 released to https://rubygems.org/gems/egregious on 7.23.2013
         Added MIT License
   Version 0.2.3 released to https://rubygems.org/gems/egregious on 7.23.2013
         Merged pull requests:
