@@ -1,14 +1,21 @@
 Update Log:
+  Version 0.2.7 released to https://rubygems.org/gems/egregious on 5.28.2015
+        Merged pull request:
+        Compatibility with Rails 4.2 #13
+
   Version 0.2.6 released to https://rubygems.org/gems/egregious on 7.22.2014
         Merged pull request:
           Rails 4 support (#11,#12)
-    Version 0.2.4 released to https://rubygems.org/gems/egregious on 7.23.2013
+
+  Version 0.2.4 released to https://rubygems.org/gems/egregious on 7.23.2013
         Added MIT License
+
   Version 0.2.3 released to https://rubygems.org/gems/egregious on 7.23.2013
         Merged pull requests:
           Mongoid integration (#6)
         Bug Fix: Bad Rails test
         Updated rails and rack dependencies
+
   Version 0.2.2 released to https://rubygems.org/gems/egregious on 2.15.2013
       Merged pull requests:
         Compatibility with Rails::API (#5)
