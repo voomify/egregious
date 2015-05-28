@@ -32,7 +32,7 @@ describe Egregious do
       begin
         raise Exception.new
       rescue Exception=>exception
-        class Rails
+        Rails.instance_eval do
           def self.root
             __FILE__
           end
@@ -75,7 +75,6 @@ describe Egregious do
     if defined?(ActiveRecord)
       it "should return expected errors for ActiveRecord" do
          exception_codes[ActiveRecord::AttributeAssignmentError].should ==  Egregious.status_code(:bad_request)
-         exception_codes[ActiveRecord::HasAndBelongsToManyAssociationForeignKeyNeeded].should ==  Egregious.status_code(:bad_request)
          exception_codes[ActiveRecord::MultiparameterAssignmentErrors].should ==  Egregious.status_code(:bad_request)
          exception_codes[ActiveRecord::ReadOnlyAssociation].should ==  Egregious.status_code(:forbidden)
          exception_codes[ActiveRecord::ReadOnlyRecord].should ==  Egregious.status_code(:forbidden)
@@ -128,10 +127,10 @@ describe Egregious do
 
   describe "build_html_file_path" do
     it "should build a valid path" do
-      class Rails
-          def self.root
-            __FILE__
-          end
+      Rails.instance_eval do
+        def self.root
+          __FILE__
+        end
       end
       build_html_file_path('500').should == File.join(__FILE__, 'public', '500.html')
     end
