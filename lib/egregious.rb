@@ -193,7 +193,15 @@ module Egregious
         "\n\n" + exception.class.to_s + ' (' + exception.message.to_s + '):\n    ' +
             clean_backtrace(exception).join("\n    ") +
             "\n\n")
+    notify_airbrake(exception)
+  end
+
+   # override this if you want to control what gets sent to airbrake
+  def notify_airbrake(exception)
+    # for ancient clients - can probably remove
     HoptoadNotifier.notify(exception) if defined?(HoptoadNotifier)
+    # tested with airbrake 3.1.15 and 4.2.1
+    env['airbrake.error_id'] = Airbrake.notify_or_ignore(exception) if defined?(Airbrake)
   end
   
   # override this if you want to change your respond_to behavior

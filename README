@@ -1,4 +1,8 @@
 Update Log:
+
+  Version 0.2.8 released to https://rubygems.org/gems/egregious on 6.5.2015
+          Added Airbrake notifications. If this is too chatty, you can configure it by overriding: notify_airbrake
+
   Version 0.2.7 released to https://rubygems.org/gems/egregious on 5.28.2015
         Merged pull request:
         Compatibility with Rails 4.2 #13
@@ -109,9 +113,20 @@ def egregious_respond_to(exception)
     end
 end
 
+
+
 # override this if you want to change what html static file gets returned.
 def build_html_file_path(status)
     File.expand_path(Rails.root, 'public', status + '.html')
+end
+
+# override this if you want to control what gets sent to airbrake
+# optionally you can configure the airbrake ignore list
+def notify_airbrake(exception)
+    # for ancient clients - can probably remove
+    HoptoadNotifier.notify(exception) if defined?(HoptoadNotifier)
+    # tested with airbrake 3.1.15 and 4.2.1
+    env['airbrake.error_id'] = Airbrake.notify_or_ignore(exception) if defined?(Airbrake)
 end
 
 KNOWN ISSUES:
