@@ -1,7 +1,16 @@
 Update Log:
 
+  Version 0.2.9 released to https://rubygems.org/gems/egregious on 10.23.2015
+        Added support for exceptions that define a http_status. The exception map can override this.
+        This is a good way to allow a raise to specify a http_status using a custom exception.
+        The idea for this came from the Stripe::Error exception classes.
+        You can now use: raise Egregious::Error.new("My very bad error", :payment_required)  or
+        define your own exceptions that implement http_status
+
+        Also updated Gemfile.lock to ruby 2.2.1 and latest dependencies. This is for specs only.
+
   Version 0.2.8 released to https://rubygems.org/gems/egregious on 6.5.2015
-          Added Airbrake notifications. If this is too chatty, you can configure it by overriding: notify_airbrake
+        Added Airbrake notifications. If this is too chatty, you can configure it by overriding: notify_airbrake
 
   Version 0.2.7 released to https://rubygems.org/gems/egregious on 5.28.2015
         Merged pull request:
@@ -32,7 +41,7 @@ Update Log:
 
 If you would like to contribute take a look at the issues feature list, fork and issue a pull request!
 
-These instructions with some formatting can be found @ http://railsindirection.blogspot.com/2011/09/rails-exception-handling-egregious.html
+An earlier version of these instructions with some formatting can be found @ http://railsindirection.blogspot.com/2011/09/rails-exception-handling-egregious.html
 
 Egregious is a rails based exception handling gem for well defined http exception handling for json, xml and html.
 

@@ -17,3 +17,14 @@ class Exception
   end
 
 end
+
+module Egregious
+  class Error < StandardError
+    attr_reader :http_status
+    attr_reader :message
+    def initialize(message=nil, http_status=nil)
+         @message = message
+         @http_status = http_status
+    end
+  end
+end

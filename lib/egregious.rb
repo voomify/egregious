@@ -170,9 +170,15 @@ module Egregious
   end
 
   # this method will lookup the exception code for a given exception class
-  # if the exception is not in our map then it will return 500
+  # if the exception is not in our map then see if the class responds to :http_status
+  # if not it will return 500
   def status_code_for_exception(exception)
-    self.exception_codes[exception.class] ? self.exception_codes[exception.class] : '500'
+    Egregious.status_code_for_exception(exception)
+  end
+
+  def self.status_code_for_exception(exception)
+      self.exception_codes[exception.class]  ||
+          (exception.respond_to?(:http_status) ? exception.http_status : '500')
   end
 
   # this is the method that handles all the exceptions we have mapped
