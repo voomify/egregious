@@ -1,6 +1,10 @@
 Update Log:
 
-  Version 0.2.9 released to https://rubygems.org/gems/egregious on 10.23.2015
+  Version 0.2.10 released to https://rubygems.org/gems/egregious on 10.28.2015
+        Fixed bug where an exception defines http_status but returns nil.
+        This was resulting in a status of 200 being returned, when it should be a 500.
+
+  Version 0.2.9 (Yanked) released to https://rubygems.org/gems/egregious on 10.23.2015
         Added support for exceptions that define a http_status. The exception map can override this.
         This is a good way to allow a raise to specify a http_status using a custom exception.
         The idea for this came from the Stripe::Error exception classes.

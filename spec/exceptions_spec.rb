@@ -49,6 +49,7 @@ describe "exception with http_status method" do
     end
   end
   let(:exception_instance) { PartyLikeIts.new }
+
   it 'should honor if not in exception code map' do
     expect(Egregious.exception_codes[PartyLikeIts]).to eq(nil)
     expect(Egregious.status_code_for_exception(exception_instance)).to eq(1999)
@@ -57,8 +58,14 @@ describe "exception with http_status method" do
   it 'should be overridden by exception code map' do
     Egregious.exception_codes.merge!({PartyLikeIts => :bad_request})
     expect(Egregious.exception_codes[PartyLikeIts]).to eq(:bad_request)
-    expect(Egregious.status_code_for_exception(exception_instance)).to eq(:bad_request)
+    expect(Egregious.status_code_for_exception(exception_instance)).to eq(400)
+  end
 
+  it "should throw 500 if nil" do
+    expect(Egregious.status_code_for_exception(Egregious::Error.new)).to eq(500)
+  end
+  it "should throw code for string" do
+      expect(Egregious.status_code_for_exception(Egregious::Error.new("hi","2001"))).to eq(2001)
   end
 end
 

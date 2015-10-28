@@ -177,8 +177,8 @@ module Egregious
   end
 
   def self.status_code_for_exception(exception)
-      self.exception_codes[exception.class]  ||
-          (exception.respond_to?(:http_status) ? exception.http_status : '500')
+    status_code(self.exception_codes[exception.class]  ||
+               (exception.respond_to?(:http_status) ? (exception.http_status||:internal_server_error) : :internal_server_error))
   end
 
   # this is the method that handles all the exceptions we have mapped

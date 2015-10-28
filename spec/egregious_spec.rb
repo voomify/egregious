@@ -117,11 +117,11 @@ describe Egregious do
   describe "status_code_for_exception" do
     it 'should return 500 for non-mapped exceptions' do
       expect(exception_codes[Exception]).to eq(nil)
-      expect(status_code_for_exception(Exception.new)).to eq('500')
+      expect(status_code_for_exception(Exception.new)).to eq(500)
     end
     it 'should allow configuration of exception codes' do
       Egregious.exception_codes.merge!({NameError => "999"})
-      expect(status_code_for_exception(NameError.new)).to eq("999")
+      expect(status_code_for_exception(NameError.new)).to eq(999)
     end
   end
 
