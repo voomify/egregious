@@ -43,22 +43,19 @@ provide the caller context information.
 
 ##### USAGE:
 1) Add to your Gemfile:
+```ruby
 gem 'egregious'
+```
 
 2) In your ApplicationController add:
+```ruby
 include Egregious
-
-- Version 0.2.10 released to [rubygems](https://rubygems.org/gems/egregious) on 10.27.2015
-  - Added support for exceptions that define a http\_status.
-    The exception map can override this.
-    This is a good way to allow a raise to specify a http\_status using a custom exception.
-    The idea for this came from the Stripe::Error exception classes.
-
+```
 
 ##### KNOWN ISSUES:
 * If you use Mongoid, CanCan or Devise you must have Egregious after CanCan/Devise in your Gemfile, if not it will not handle those errors correctly.
 
-##### Implementation
+##### Implementation Notes
 If you have a json or xml api into your rails application, you probably
 have added your own exception handling to map exceptions to a http status and formatting your json and xml output.
 
