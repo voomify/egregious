@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/voomify/egregious.svg?branch=master)](https://travis-ci.org/voomify/egregious)
+[
 ##### Update Log:
 
   * Version 0.2.11 Fixed the development behavior that does not show the debugging screens when exceptions
