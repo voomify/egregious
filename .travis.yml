@@ -1,0 +1,20 @@
+language: ruby
+env:
+  - "RAILS_VERSION=3.0.20"
+  - "RAILS_VERSION=3.1.12"
+  - "RAILS_VERSION=3.2.22"
+  - "RAILS_VERSION=4.0.13"
+  - "RAILS_VERSION=4.1.14"
+  - "RAILS_VERSION=4.2.5"
+rvm:
+  - "1.9.3"
+  - "2.0.0"
+  - "2.1.7"
+  - "2.2.3"
+
+matrix:
+  allow_failures:
+    - env: "RAILS_VERSION=master"
+    - rvm: ruby-head
+# uncomment this line if your project needs to run something other than `rake`:
+# script: bundle exec rspec spec
