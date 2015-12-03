@@ -10,6 +10,7 @@ require 'action_controller'
 require 'warden'
 require 'cancan'
 require 'mongoid'
+require 'rails/all'
 
 require 'egregious' # and any other gems you need
 

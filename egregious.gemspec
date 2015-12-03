@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
 
 
   s.add_runtime_dependency "rails", '> 3.0', '< 5'
-  s.add_runtime_dependency "rack", '>= 1.3.6'
+  s.add_runtime_dependency "rack", '>= 1.2.5'
   s.add_runtime_dependency "htmlentities"
 
   # specify any dependencies here; for example:
@@ -30,7 +30,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "warden"
   s.add_development_dependency "cancan"
   s.add_development_dependency "mongoid"
-  s.add_development_dependency "bson_ext"
-
 
 end

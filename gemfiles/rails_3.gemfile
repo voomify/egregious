@@ -2,8 +2,8 @@
 
 source "http://rubygems.org"
 
+gem "test-unit", "~> 3.0"
 gem "appraisal"
-gem "mongoid"
 gem "rails", "3.2.22"
 
 gemspec :path => "../"
