@@ -96,7 +96,7 @@ module Egregious
                                Mongoid::Errors::Validations=>status_code(:unprocessable_entity)
                              })
       
-      if Mongoid::VERSION > '3'
+      if defined?(Mongoid::VERSION) && Mongoid::VERSION > '3'
         exception_codes.merge!({
                                  Mongoid::Errors::ReadonlyAttribute=>status_code(:forbidden),
                                  Mongoid::Errors::UnknownAttribute=>status_code(:bad_request)
@@ -137,7 +137,9 @@ module Egregious
   def clean_backtrace(exception)
     if backtrace = exception.backtrace
       if Egregious.root
-        backtrace.map { |line| line.sub Egregious.root, '' }
+        backtrace.map { |line|
+          line.sub Egregious.root.to_s, ''
+        }
       else
         backtrace
       end
@@ -173,7 +175,7 @@ module Egregious
   # if the exception is not in our map then see if the class responds to :http_status
   # if not it will return 500
   def status_code_for_exception(exception)
-    Egregious.status_code_for_exception(exception)
+      Egregious.status_code_for_exception(exception)
   end
 
   def self.status_code_for_exception(exception)
@@ -217,9 +219,16 @@ module Egregious
       format.xml { render :xml=> exception.to_xml, :status => status }
       format.json { render :json=> exception.to_json, :status => status }
       # render the html page for the status we are returning it exists...if not then render the 500.html page.
-      format.html { render :file => File.exists?(build_html_file_path(status)) ?
+      format.html {
+        # render the rails exception page if we are local/debugging
+        if(Rails.application.config.consider_all_requests_local || request.local?)
+          raise exception
+        else
+          render :file => File.exists?(build_html_file_path(status)) ?
                                       build_html_file_path(status) : build_html_file_path('500'),
-                           :status => status }
+                           :status => status
+        end
+      }
     end
   end
 
@@ -230,25 +239,6 @@ module Egregious
   def self.included(base)
     base.class_eval do
       rescue_from 'Exception' , :with => :egregious_exception_handler
-      
-      unless respond_to?(:flash)
-        def egregious_flash(exception)
-        end
-      end
-      
-      unless respond_to?(:respond_to)
-        def egregious_respond_to(exception)
-          status = status_code_for_exception(exception)
-          case params[:format]
-          when 'xml' then render :xml=> exception.to_xml, :status => status
-          when 'json' then render :json=> exception.to_json, :status => status
-          # render the html page for the status we are returning it exists...if not then render the 500.html page.
-          else render :file => File.exists?(build_html_file_path(status)) ?
-                                            build_html_file_path(status) : build_html_file_path('500'),
-                                 :status => status
-          end
-        end
-      end
     end
   end
 end

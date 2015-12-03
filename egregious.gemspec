@@ -25,10 +25,12 @@ Gem::Specification.new do |s|
 
   # specify any dependencies here; for example:
   s.add_development_dependency "rspec"
+  s.add_development_dependency "rspec-rails"
   s.add_development_dependency "json"
   s.add_development_dependency "hpricot"
   s.add_development_dependency "warden"
   s.add_development_dependency "cancan"
   s.add_development_dependency "mongoid"
+  s.add_development_dependency "appraisal"
 
 end

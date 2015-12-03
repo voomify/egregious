@@ -105,7 +105,7 @@ describe Egregious do
         expect(exception_codes[Mongoid::Errors::Validations]).to eq(Egregious.status_code(:unprocessable_entity))
       end
 
-      if Mongoid::VERSION > '3'
+      if defined?(Mongoid::VERSION) && Mongoid::VERSION > '3'
         it "should return expected errors for Mongoid 3+" do
           expect(exception_codes[Mongoid::Errors::ReadonlyAttribute]).to eq(Egregious.status_code(:forbidden))
           expect(exception_codes[Mongoid::Errors::UnknownAttribute]).to eq(Egregious.status_code(:bad_request))
