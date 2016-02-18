@@ -206,10 +206,14 @@ module Egregious
 
    # override this if you want to control what gets sent to airbrake
   def notify_airbrake(exception)
-    # for ancient clients - can probably remove
-    HoptoadNotifier.notify(exception) if defined?(HoptoadNotifier)
-    # tested with airbrake 3.1.15 and 4.2.1
-    env['airbrake.error_id'] = Airbrake.notify_or_ignore(exception) if defined?(Airbrake)
+    # tested with airbrake 3.1.15, 4.2.1 and 5.0.5
+    if defined?(Airbrake)
+      if(Airbrake.respond_to?(:notify_or_ignore))
+        env['airbrake.error_id'] = Airbrake.notify_or_ignore(exception) # V4
+      else
+        env['airbrake.error_id'] = Airbrake.notify(exception) # V5
+      end
+    end
   end
   
   # override this if you want to change your respond_to behavior

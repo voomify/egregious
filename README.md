@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.org/voomify/egregious.svg?branch=master)](https://travis-ci.org/voomify/egregious)
 ##### Update Log:
 
+  * Version 0.2.12 Added support for Airbrake 5
+
   * Version 0.2.11 Fixed the development behavior that does not show the debugging screens when exceptions
   are thrown. Now when in development you will get the rails default exception handling screens for html requests.
 
@@ -247,8 +249,14 @@ end
 # override this if you want to control what gets sent to airbrake
 # optionally you can configure the airbrake ignore list
 def notify_airbrake(exception)
- # tested with airbrake 3.1.15 and 4.2.1
- env['airbrake.error_id'] = Airbrake.notify_or_ignore(exception) if defined?(Airbrake)
+  # tested with airbrake 3.1.15, 4.2.1 and 5.0.5
+  if defined?(Airbrake)
+    if(Airbrake.respond_to?(:notify_or_ignore))
+      env['airbrake.error_id'] = Airbrake.notify_or_ignore(exception) # V4
+    else
+      env['airbrake.error_id'] = Airbrake.notify(exception) # V5
+    end
+  end
 end
 ```
 
