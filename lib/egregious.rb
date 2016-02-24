@@ -206,12 +206,14 @@ module Egregious
 
    # override this if you want to control what gets sent to airbrake
   def notify_airbrake(exception)
-    # tested with airbrake 3.1.15, 4.2.1 and 5.0.5
+    # tested with airbrake 4.3.5 and 5.0.5
     if defined?(Airbrake)
       if(Airbrake.respond_to?(:notify_or_ignore))
-        env['airbrake.error_id'] = Airbrake.notify_or_ignore(exception) # V4
+        env['airbrake.error_id'] = Airbrake.notify_or_ignore(exception, airbrake_request_data) # V4
       else
-        env['airbrake.error_id'] = Airbrake.notify(exception) # V5
+        # V5
+        notice = Airbrake::Rack::NoticeBuilder.new(env).build_notice(exception)
+        env['airbrake.error_id'] = Airbrake.notify(notice)
       end
     end
   end

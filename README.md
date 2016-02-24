@@ -1,14 +1,12 @@
 [![Build Status](https://travis-ci.org/voomify/egregious.svg?branch=master)](https://travis-ci.org/voomify/egregious)
 ##### Update Log:
 
+  * Version 0.2.13 Added Airbrake rack env to notifications for Airbrake 4 and 5
+
   * Version 0.2.12 Added support for Airbrake 5
 
   * Version 0.2.11 Fixed the development behavior that does not show the debugging screens when exceptions
   are thrown. Now when in development you will get the rails default exception handling screens for html requests.
-
-  * Version 0.2.10 released to https://rubygems.org/gems/egregious on 10.28.2015
-        Fixed bug where an exception defines http_status but returns nil.
-        This was resulting in a status of 200 being returned, when it should be a 500.
 
 If you would like to contribute take a look at the issues feature list, fork and issue a pull request!
 
