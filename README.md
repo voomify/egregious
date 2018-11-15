@@ -96,7 +96,10 @@ Exception.new("Hi Dad").to_json
 ```
 returns:
 ```json
-{"error":"Hi Dad", "type":"Exception"}
+{
+  "error":"Hi Dad", 
+  "type":"Exception"
+}
 ```
 
 So that's pretty handy in itself. Now all exceptions have a json and xml api that describe them. It happens to be the same
@@ -147,8 +150,8 @@ your ApplicationController class add the following at or near the top:
 
 ```ruby
 class ApplicationController < ActionController::Base
-    include Egregious
-    # your code ...
+  include Egregious
+  # your code ...
 end
 ```
 
@@ -163,7 +166,7 @@ mappings, or change the defaults add an initializer and put the following into i
 
 
 ```ruby
-Egregious.exception_codes.merge!({NameError => :bad_request})
+Egregious.exception_codes.merge!(NameError => :bad_request)
 ```
 
 
@@ -210,8 +213,7 @@ end
 
 ```ruby
 # override this if you want your logging to behave differently
-def
-      egregious_log(exception)
+def egregious_log(exception)
  logger.fatal(
  "\n\n" + exception.class.to_s + ' (' +
       exception.message.to_s + '):\n ' +
